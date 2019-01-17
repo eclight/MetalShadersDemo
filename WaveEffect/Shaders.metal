@@ -101,8 +101,8 @@ compute_normals(texture2d<float, access::read> input [[texture(0)]],
         return;
     }
     
-    const uint2 right { uint(min(int(w), int(gid.x + 1))), gid.y };
-    const uint2 top   { gid.x, uint(min(int(h), int(gid.y + 1))) };
+    const uint2 right { uint(min(int(w - 1), int(gid.x + 1))), gid.y };
+    const uint2 top   { gid.x, uint(min(int(h - 1), int(gid.y + 1))) };
     
     const float height = input.read(gid).x;
     const float dhx = input.read(right).x - height;
