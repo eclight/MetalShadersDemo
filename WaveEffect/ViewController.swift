@@ -21,20 +21,15 @@ class ViewController: UIViewController {
     var vertexBuffer: MTLBuffer!
     var pipelineState: MTLRenderPipelineState!
     var commandQueue: MTLCommandQueue!
-    
     var frontBuffer: MTLTexture!
     var backBuffer: MTLTexture!
     var normalMap: MTLTexture!
     var backgroundMap: MTLTexture!
-    var computePipelineState: MTLComputePipelineState!
-    
-    var uniformsBuffer: MTLBuffer!
-    
+    var updateHeightmapPipelineState: MTLComputePipelineState!
     var addDropPipleineState: MTLComputePipelineState!
     var computeNormalsPipelineState: MTLComputePipelineState!
-    
+    var uniformsBuffer: MTLBuffer!
     var timer: CADisplayLink!
-    
     var taps: [Position] = []
     
     var recognizer: UITapGestureRecognizer!
@@ -64,8 +59,8 @@ class ViewController: UIViewController {
     {
         let image = UIImage(named: "Background")!
         
-        let w = metalLayer.bounds.width * metalLayer.contentsScale * 4
-        let h = metalLayer.bounds.height * metalLayer.contentsScale * 4
+        let w = metalLayer.bounds.width * metalLayer.contentsScale * 3
+        let h = metalLayer.bounds.height * metalLayer.contentsScale * 3
         
         let cropped = image.cgImage!.cropping(to: CGRect(x: 0, y: 0, width: w, height: h))!
         
@@ -97,16 +92,16 @@ class ViewController: UIViewController {
         let fragmentProgram = defaultLibrary.makeFunction(name: "basic_fragment")
         let vertexProgram = defaultLibrary.makeFunction(name: "basic_vertex")
         
-        let aspect = view.frame.height / view.frame.width;
+        let aspect = Float(view.frame.height / view.frame.width);
         
         uniformsBuffer = device.makeBuffer(length: MemoryLayout<Float>.size * 4)
         
-        let width: Int = 512
+        let height: Int = 512
         
         let textureDescriptor = MTLTextureDescriptor()
         textureDescriptor.pixelFormat = .rg32Float
-        textureDescriptor.width = width
-        textureDescriptor.height = Int(CGFloat(width) * aspect + 0.5)
+        textureDescriptor.width = Int(Float(height) / aspect + 0.5)
+        textureDescriptor.height =  height;
         textureDescriptor.usage = [.shaderWrite, .shaderRead]
         
         backBuffer = device.makeTexture(descriptor: textureDescriptor)
@@ -114,7 +109,7 @@ class ViewController: UIViewController {
         normalMap = device.makeTexture(descriptor: textureDescriptor)
         
         let updateHeightmapFunction = defaultLibrary.makeFunction(name: "update_heightmap")
-        computePipelineState = try! device.makeComputePipelineState(function: updateHeightmapFunction!)
+        updateHeightmapPipelineState = try! device.makeComputePipelineState(function: updateHeightmapFunction!)
         
         let addDropFunction = defaultLibrary.makeFunction(name: "add_drop")
         addDropPipleineState = try! device.makeComputePipelineState(function: addDropFunction!)
@@ -133,8 +128,27 @@ class ViewController: UIViewController {
 
         commandQueue = device.makeCommandQueue()
         
-        timer = CADisplayLink(target: self, selector: #selector(gameloop))
+        timer = CADisplayLink(target: self, selector: #selector(drawFrame))
         timer.add(to: RunLoop.main, forMode: .default)
+    }
+    
+    func writeDropUniforms(tapPos: Position, buffer: MTLBuffer) {
+        var bufferDataPointer = uniformsBuffer.contents()
+        
+        // Tap position
+        
+        bufferDataPointer.storeBytes(of: tapPos, as: Position.self)
+        bufferDataPointer = bufferDataPointer.advanced(by: MemoryLayout<Position>.stride)
+        
+        // Drop size
+        
+        bufferDataPointer.storeBytes(of: 0.04, as: Float.self)
+        bufferDataPointer = bufferDataPointer.advanced(by: MemoryLayout<Float>.stride)
+        
+        // Strength
+        
+        bufferDataPointer.storeBytes(of: 0.0009, as: Float.self)
+        bufferDataPointer = bufferDataPointer.advanced(by: MemoryLayout<Float>.size)
     }
     
     func render() {
@@ -145,8 +159,8 @@ class ViewController: UIViewController {
         
         let commandBuffer = commandQueue.makeCommandBuffer()!
         
-        let w = computePipelineState.threadExecutionWidth
-        let h = computePipelineState.maxTotalThreadsPerThreadgroup / w
+        let w = updateHeightmapPipelineState.threadExecutionWidth
+        let h = updateHeightmapPipelineState.maxTotalThreadsPerThreadgroup / w
         let threadsPerThreadgroup = MTLSizeMake(w, h, 1)
         let threadGroupsPerGrid = MTLSizeMake((frontBuffer.width + w - 1) / w,
                                               (frontBuffer.height + h - 1) / h,
@@ -158,25 +172,14 @@ class ViewController: UIViewController {
             computeEncoder.setComputePipelineState(addDropPipleineState)
             computeEncoder.setTexture(frontBuffer, index: 0)
             computeEncoder.setBuffer(uniformsBuffer, offset: 0, index: 0)
-            
-            var ptr = uniformsBuffer.contents()
-            
-            ptr.storeBytes(of: tap, as: Position.self)
-            ptr = ptr.advanced(by: MemoryLayout<Position>.size)
-            
-            ptr.storeBytes(of: 0.02, as: Float.self)
-            ptr = ptr.advanced(by: MemoryLayout<Float>.size)
-    
-            ptr.storeBytes(of: 0.0009, as: Float.self)
-            ptr = ptr.advanced(by: MemoryLayout<Float>.size)
-            
+            writeDropUniforms(tapPos: tap, buffer: uniformsBuffer)
             computeEncoder.dispatchThreadgroups(threadGroupsPerGrid, threadsPerThreadgroup: threadsPerThreadgroup)
         }
         taps.removeAll()
         
-        computeEncoder.setComputePipelineState(computePipelineState)
+        computeEncoder.setComputePipelineState(updateHeightmapPipelineState)
         
-        for _ in 1...2 {
+        for _ in 1...4 {
             computeEncoder.setTexture(frontBuffer, index: 0)
             computeEncoder.setTexture(backBuffer, index: 1)
             computeEncoder.dispatchThreadgroups(threadGroupsPerGrid, threadsPerThreadgroup: threadsPerThreadgroup)
@@ -205,7 +208,7 @@ class ViewController: UIViewController {
         commandBuffer.commit()
     }
     
-    @objc func gameloop() {
+    @objc func drawFrame() {
         autoreleasepool {
             self.render()
         }
