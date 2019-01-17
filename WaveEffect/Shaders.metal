@@ -77,8 +77,8 @@ update_heightmap(texture2d<float, access::read> input [[texture(0)]],
     float4 cell = input.read(gid);
     
     const uint2 left   { uint(max(0, int(gid.x - 1))), gid.y };
-    const uint2 right  { uint(min(int(w), int(gid.x + 1))), gid.y };
-    const uint2 top    { gid.x, uint(min(int(h), int(gid.y + 1))) };
+    const uint2 right  { uint(min(int(w - 1), int(gid.x + 1))), gid.y };
+    const uint2 top    { gid.x, uint(min(int(h - 1), int(gid.y + 1))) };
     const uint2 bottom { gid.x, uint(max(0, int(gid.y - 1))) };
     
     const float average = 0.25 * (input.read(left).x + input.read(right).x + input.read(top).x + input.read(bottom).x);
