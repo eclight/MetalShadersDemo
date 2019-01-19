@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C494CFB21F1354B0088F774 /* WaveSurfaceRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C494CFA21F1354B0088F774 /* WaveSurfaceRenderer.swift */; };
 		7CDCE46821E4EA0300456EC4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDCE46721E4EA0300456EC4 /* AppDelegate.swift */; };
 		7CDCE46A21E4EA0300456EC4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDCE46921E4EA0300456EC4 /* ViewController.swift */; };
 		7CDCE46D21E4EA0300456EC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CDCE46B21E4EA0300456EC4 /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7C494CFA21F1354B0088F774 /* WaveSurfaceRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveSurfaceRenderer.swift; sourceTree = "<group>"; };
 		7CDCE46421E4EA0300456EC4 /* WaveEffect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WaveEffect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CDCE46721E4EA0300456EC4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7CDCE46921E4EA0300456EC4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				7CDCE46E21E4EA0400456EC4 /* Assets.xcassets */,
 				7CDCE47021E4EA0400456EC4 /* LaunchScreen.storyboard */,
 				7CDCE47321E4EA0400456EC4 /* Info.plist */,
+				7C494CFA21F1354B0088F774 /* WaveSurfaceRenderer.swift */,
 			);
 			path = WaveEffect;
 			sourceTree = "<group>";
@@ -139,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7CDCE47A21E4EA7A00456EC4 /* Shaders.metal in Sources */,
+				7C494CFB21F1354B0088F774 /* WaveSurfaceRenderer.swift in Sources */,
 				7CDCE46A21E4EA0300456EC4 /* ViewController.swift in Sources */,
 				7CDCE46821E4EA0300456EC4 /* AppDelegate.swift in Sources */,
 			);
