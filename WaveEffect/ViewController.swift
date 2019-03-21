@@ -19,16 +19,6 @@ class ViewController: UIViewController {
     var tapRecognizer: UITapGestureRecognizer!
     var dragRecognizer: UIPanGestureRecognizer!
     
-    let vertexData: [Float] = [
-        -1.0, -1.0, 0.0, 0.0,
-        -1.0,  1.0, 0.0, 1.0,
-         1.0, -1.0, 1.0, 0.0,
-         
-        -1.0,  1.0, 0.0, 1.0,
-         1.0,  1.0, 1.0, 1.0,
-         1.0, -1.0, 1.0, 0.0
-    ]
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -67,7 +57,7 @@ class ViewController: UIViewController {
     
     @objc func drawFrame() {
         autoreleasepool {
-            self.render()
+            render()
         }
     }
     
