@@ -44,7 +44,8 @@ basic_fragment(VertexOut in [[ stage_in ]],
 }
 
 kernel void
-add_drop(texture2d<float, access::read_write> output [[texture(0)]],
+add_drop(texture2d<float, access::read> input [[texture(0)]],
+         texture2d<float, access::write> output [[texture(1)]],
          constant AddDropUniforms& uniforms [[buffer(0)]],
          uint2 gid [[thread_position_in_grid]])
 {

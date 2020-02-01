@@ -104,9 +104,12 @@ class WaveSurfaceRenderer {
         for tap in drops {
             computeEncoder.setComputePipelineState(addDropPipleineState)
             computeEncoder.setTexture(frontHeightMap, index: 0)
+            computeEncoder.setTexture(backHeightMap, index: 1)
             computeEncoder.setBuffer(dropBuffer, offset: 0, index: 0)
             writeDropData(drop: tap, buffer: dropBuffer)
             computeEncoder.dispatchThreadgroups(threadGroupsPerGrid, threadsPerThreadgroup: threadsPerThreadgroup)
+            
+            swap(&frontHeightMap, &backHeightMap)
         }
 
         computeEncoder.setComputePipelineState(updateHeightmapPipelineState)
