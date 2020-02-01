@@ -58,8 +58,9 @@ add_drop(texture2d<float, access::read> input [[texture(0)]],
     float drop = max(0.0, 1.0 - distance(float2(uniforms.dropCenter), coords) / uniforms.radius);
     drop = 0.5 - cos(drop * M_PI_H) * 0.5;
     
-    const float4 cell = output.read(gid);
+    float4 cell = input.read(gid);
     cell.x += drop * uniforms.strength;
+    
     output.write(cell, gid);
 }
 
