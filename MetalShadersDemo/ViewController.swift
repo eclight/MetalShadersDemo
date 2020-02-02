@@ -1,10 +1,3 @@
-//
-//  ViewController.swift
-//  WaveEffect
-//
-//  Created by Oleg on 12/27/18.
-//  Copyright © 2018 eclight. All rights reserved.
-//
 
 import UIKit
 import Metal
@@ -12,7 +5,7 @@ import MetalKit
 
 class ViewController: UIViewController {
     var metalLayer: CAMetalLayer!
-    var renderer: WaveSurfaceRenderer!
+    var renderer: SurfaceRenderer!
     var timer: CADisplayLink!
     var drops: [Drop] = []
     
@@ -25,8 +18,8 @@ class ViewController: UIViewController {
         tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         dragRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleTap))
         
-        self.view.addGestureRecognizer(tapRecognizer)
-        self.view.addGestureRecognizer(dragRecognizer)
+        view.addGestureRecognizer(tapRecognizer)
+        view.addGestureRecognizer(dragRecognizer)
         
         let device = MTLCreateSystemDefaultDevice()!
         metalLayer = CAMetalLayer()
@@ -43,7 +36,7 @@ class ViewController: UIViewController {
         
         let aspect = Float(view.frame.height / view.frame.width);
         let height: Int = 256
-        renderer = WaveSurfaceRenderer(device: device, backgroundImage: croppedBackgroundImage, gridSize: (Int(Float(height) / aspect + 0.5), height))
+        renderer = SurfaceRenderer(device: device, backgroundImage: croppedBackgroundImage, gridSize: (Int(Float(height) / aspect + 0.5), height))
         
         timer = CADisplayLink(target: self, selector: #selector(drawFrame))
         timer.add(to: RunLoop.main, forMode: .default)

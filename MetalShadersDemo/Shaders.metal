@@ -1,10 +1,3 @@
-//
-//  Shaders.metal
-//  WaveEffect
-//
-//  Created by Oleg on 12/27/18.
-//  Copyright © 2018 eclight. All rights reserved.
-//
 
 #include <metal_stdlib>
 using namespace metal;
@@ -32,8 +25,7 @@ basic_vertex(const device packed_float4* vertex_array [[ buffer(0) ]],
 
 fragment float4
 basic_fragment(VertexOut in [[ stage_in ]],
-               texture2d<float,
-               access::sample> normalMap [[ texture(0) ]],
+               texture2d<float, access::sample> normalMap [[ texture(0) ]],
                texture2d<float, access::sample> backgroundMap [[ texture(1) ]])
 {
     constexpr sampler textureSampler (mag_filter::linear,

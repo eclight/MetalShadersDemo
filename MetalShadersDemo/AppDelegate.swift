@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  WaveEffect
-//
-//  Created by Oleg on 1/8/19.
-//  Copyright © 2019 eclight. All rights reserved.
-//
 
 import UIKit
 

@@ -1,11 +1,3 @@
-//
-//  WaterSurface.swift
-//  WaveEffect
-//
-//  Created by Oleg on 1/18/19.
-//  Copyright © 2019 eclight. All rights reserved.
-//
-
 import Metal
 import MetalKit
 import UIKit
@@ -17,7 +9,7 @@ struct Drop {
     var strength: Float
 }
 
-class WaveSurfaceRenderer {
+class SurfaceRenderer {
     private let device: MTLDevice
     private let vertexBuffer: MTLBuffer
     private let dropBuffer: MTLBuffer
@@ -101,12 +93,12 @@ class WaveSurfaceRenderer {
         let commandBuffer = commandQueue.makeCommandBuffer()!
         let computeEncoder = commandBuffer.makeComputeCommandEncoder()!
         
-        for tap in drops {
+        for drop in drops {
             computeEncoder.setComputePipelineState(addDropPipleineState)
             computeEncoder.setTexture(frontHeightMap, index: 0)
             computeEncoder.setTexture(backHeightMap, index: 1)
             computeEncoder.setBuffer(dropBuffer, offset: 0, index: 0)
-            writeDropData(drop: tap, buffer: dropBuffer)
+            writeDropData(drop: drop, buffer: dropBuffer)
             computeEncoder.dispatchThreadgroups(threadGroupsPerGrid, threadsPerThreadgroup: threadsPerThreadgroup)
             
             swap(&frontHeightMap, &backHeightMap)

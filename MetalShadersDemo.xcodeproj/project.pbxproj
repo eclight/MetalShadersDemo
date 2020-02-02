@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7C494CFB21F1354B0088F774 /* WaveSurfaceRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C494CFA21F1354B0088F774 /* WaveSurfaceRenderer.swift */; };
+		7C494CFB21F1354B0088F774 /* SurfaceRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C494CFA21F1354B0088F774 /* SurfaceRenderer.swift */; };
 		7CDCE46821E4EA0300456EC4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDCE46721E4EA0300456EC4 /* AppDelegate.swift */; };
 		7CDCE46A21E4EA0300456EC4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDCE46921E4EA0300456EC4 /* ViewController.swift */; };
 		7CDCE46D21E4EA0300456EC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CDCE46B21E4EA0300456EC4 /* Main.storyboard */; };
@@ -17,8 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7C494CFA21F1354B0088F774 /* WaveSurfaceRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveSurfaceRenderer.swift; sourceTree = "<group>"; };
-		7CDCE46421E4EA0300456EC4 /* WaveEffect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WaveEffect.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C494CFA21F1354B0088F774 /* SurfaceRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurfaceRenderer.swift; sourceTree = "<group>"; };
+		7CDCE46421E4EA0300456EC4 /* MetalShadersDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalShadersDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CDCE46721E4EA0300456EC4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7CDCE46921E4EA0300456EC4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7CDCE46C21E4EA0300456EC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -42,7 +42,7 @@
 		7CDCE45B21E4EA0300456EC4 = {
 			isa = PBXGroup;
 			children = (
-				7CDCE46621E4EA0300456EC4 /* WaveEffect */,
+				7CDCE46621E4EA0300456EC4 /* MetalShadersDemo */,
 				7CDCE46521E4EA0300456EC4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,12 +50,12 @@
 		7CDCE46521E4EA0300456EC4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7CDCE46421E4EA0300456EC4 /* WaveEffect.app */,
+				7CDCE46421E4EA0300456EC4 /* MetalShadersDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		7CDCE46621E4EA0300456EC4 /* WaveEffect */ = {
+		7CDCE46621E4EA0300456EC4 /* MetalShadersDemo */ = {
 			isa = PBXGroup;
 			children = (
 				7CDCE47921E4EA7A00456EC4 /* Shaders.metal */,
@@ -65,17 +65,17 @@
 				7CDCE46E21E4EA0400456EC4 /* Assets.xcassets */,
 				7CDCE47021E4EA0400456EC4 /* LaunchScreen.storyboard */,
 				7CDCE47321E4EA0400456EC4 /* Info.plist */,
-				7C494CFA21F1354B0088F774 /* WaveSurfaceRenderer.swift */,
+				7C494CFA21F1354B0088F774 /* SurfaceRenderer.swift */,
 			);
-			path = WaveEffect;
+			path = MetalShadersDemo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		7CDCE46321E4EA0300456EC4 /* WaveEffect */ = {
+		7CDCE46321E4EA0300456EC4 /* MetalShadersDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7CDCE47621E4EA0400456EC4 /* Build configuration list for PBXNativeTarget "WaveEffect" */;
+			buildConfigurationList = 7CDCE47621E4EA0400456EC4 /* Build configuration list for PBXNativeTarget "MetalShadersDemo" */;
 			buildPhases = (
 				7CDCE46021E4EA0300456EC4 /* Sources */,
 				7CDCE46121E4EA0300456EC4 /* Frameworks */,
@@ -85,9 +85,9 @@
 			);
 			dependencies = (
 			);
-			name = WaveEffect;
+			name = MetalShadersDemo;
 			productName = WaveEffect;
-			productReference = 7CDCE46421E4EA0300456EC4 /* WaveEffect.app */;
+			productReference = 7CDCE46421E4EA0300456EC4 /* MetalShadersDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -106,7 +106,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 7CDCE45F21E4EA0300456EC4 /* Build configuration list for PBXProject "WaveEffect" */;
+			buildConfigurationList = 7CDCE45F21E4EA0300456EC4 /* Build configuration list for PBXProject "MetalShadersDemo" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -119,7 +119,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7CDCE46321E4EA0300456EC4 /* WaveEffect */,
+				7CDCE46321E4EA0300456EC4 /* MetalShadersDemo */,
 			);
 		};
 /* End PBXProject section */
@@ -143,7 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7CDCE47A21E4EA7A00456EC4 /* Shaders.metal in Sources */,
-				7C494CFB21F1354B0088F774 /* WaveSurfaceRenderer.swift in Sources */,
+				7C494CFB21F1354B0088F774 /* SurfaceRenderer.swift in Sources */,
 				7CDCE46A21E4EA0300456EC4 /* ViewController.swift in Sources */,
 				7CDCE46821E4EA0300456EC4 /* AppDelegate.swift in Sources */,
 			);
@@ -328,7 +328,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7CDCE45F21E4EA0300456EC4 /* Build configuration list for PBXProject "WaveEffect" */ = {
+		7CDCE45F21E4EA0300456EC4 /* Build configuration list for PBXProject "MetalShadersDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7CDCE47421E4EA0400456EC4 /* Debug */,
@@ -337,7 +337,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7CDCE47621E4EA0400456EC4 /* Build configuration list for PBXNativeTarget "WaveEffect" */ = {
+		7CDCE47621E4EA0400456EC4 /* Build configuration list for PBXNativeTarget "MetalShadersDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7CDCE47721E4EA0400456EC4 /* Debug */,

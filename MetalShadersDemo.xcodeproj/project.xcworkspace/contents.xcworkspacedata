@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:WaveEffect.xcodeproj">
+      location = "self:/Users/oleg/Development/WaveEffect/MetalShadersDemo.xcodeproj">
    </FileRef>
 </Workspace>
