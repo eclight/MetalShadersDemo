@@ -85,19 +85,21 @@ class SurfaceRenderer {
         threadGroupsPerGrid = MTLSizeMake((frontHeightMap.width + w - 1) / w,
                                           (frontHeightMap.height + h - 1) / h, 1)
     }
-
-    func render(drawable: CAMetalDrawable, drops: [Drop]) {
+        
+    func render(drawable: CAMetalDrawable, drops: [Drop], updateIterations: Int) {
         let renderPassDescriptor = MTLRenderPassDescriptor()
         renderPassDescriptor.colorAttachments[0].texture = drawable.texture
 
         let commandBuffer = commandQueue.makeCommandBuffer()!
         let computeEncoder = commandBuffer.makeComputeCommandEncoder()!
 
+        computeEncoder.setComputePipelineState(addDropPipleineState)
+        computeEncoder.setBuffer(dropBuffer, offset: 0, index: 0)
+        
         for drop in drops {
-            computeEncoder.setComputePipelineState(addDropPipleineState)
             computeEncoder.setTexture(frontHeightMap, index: 0)
             computeEncoder.setTexture(backHeightMap, index: 1)
-            computeEncoder.setBuffer(dropBuffer, offset: 0, index: 0)
+            
             writeDropData(drop: drop, buffer: dropBuffer)
             computeEncoder.dispatchThreadgroups(threadGroupsPerGrid, threadsPerThreadgroup: threadsPerThreadgroup)
 
@@ -105,8 +107,8 @@ class SurfaceRenderer {
         }
 
         computeEncoder.setComputePipelineState(updateHeightmapPipelineState)
-
-        for _ in 0 ..< 3 {
+                
+        for _ in 0 ..< updateIterations {
             computeEncoder.setTexture(frontHeightMap, index: 0)
             computeEncoder.setTexture(backHeightMap, index: 1)
             computeEncoder.dispatchThreadgroups(threadGroupsPerGrid, threadsPerThreadgroup: threadsPerThreadgroup)
